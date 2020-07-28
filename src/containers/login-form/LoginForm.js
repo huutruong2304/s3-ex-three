@@ -1,5 +1,9 @@
 import React, { Component } from "react";
-import Input from "../../components/UI/Input/Input";
+import Input from "../../components/UI/input/Input";
+import Button from "../../components/UI/button/Button";
+
+import "./LoginForm.css";
+import Link from "../../components/UI/link/Link";
 
 class LoginForm extends Component {
   constructor(props) {
@@ -62,10 +66,17 @@ class LoginForm extends Component {
             changed={(event) => this.isChange(event, formElement.id)}
           />
         ))}
-        <button>Login</button>
+        <Button name="login"></Button>
       </form>
     );
-    return <div>{form}</div>;
+    return (
+      <div className="LoginForm">
+        {form}
+        <p class="Text">
+          Not registered? <Link link="#" name="Create an account"></Link>
+        </p>
+      </div>
+    );
   }
 }
 

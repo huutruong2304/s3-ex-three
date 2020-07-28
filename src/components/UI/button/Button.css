@@ -1,0 +1,15 @@
+button {
+  width: 100%;
+  border: none;
+  background-color: #00ac40;
+  text-align: center;
+  margin: 4px;
+  text-transform: uppercase;
+  color: white;
+  padding: 15px;
+  cursor: pointer;
+  transition: ease-in-out 0.25s;
+}
+button:hover {
+  opacity: 0.9;
+}
