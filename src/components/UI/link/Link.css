@@ -1,9 +1,9 @@
-a {
+.Link a {
   color: #00ac40;
-  transition: ease-in-out 0.25s;
+  transition: ease-in-out 0.5s;
   text-decoration: none;
 }
 
-a:hover {
+.Link a:hover {
   opacity: 0.9;
 }

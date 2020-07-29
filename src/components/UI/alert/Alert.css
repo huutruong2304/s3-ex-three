@@ -1,0 +1,13 @@
+.Alert {
+  padding: 2px 0;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.Error {
+  color: red;
+}
+
+.Sucess {
+  color: #00ac40;
+}

@@ -1,11 +1,38 @@
-input {
+.Input {
   width: 100%;
   padding: 15px 10px;
-  margin: 10px auto;
+  margin: 10px auto 5px;
   background-color: #f2f2f2;
-  border: none;
-  /* transition: ease-in-out 1s; */
+  border: 1px solid transparent;
+  outline: none;
 }
-input:focus {
-  outline: 1px solid #00ac40;
+/* .Input:focus {
+  border: 1px solid #00ac40;
+} */
+.Invalid {
+  border: 1px solid red;
+  animation-name: invalid-border-appear;
+  animation-duration: 0.5s;
+}
+.Valid {
+  border: 1px solid #00ac40;
+  animation-name: valid-border-appear;
+  animation-duration: 0.5s;
+}
+
+@keyframes invalid-border-appear {
+  0% {
+    border: 1px solid transparent;
+  }
+  100% {
+    border: 1px solid red;
+  }
+}
+@keyframes valid-border-appear {
+  0% {
+    border: 1px solid transparent;
+  }
+  100% {
+    border: 1px solid #00ac40;
+  }
 }

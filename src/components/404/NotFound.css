@@ -1,0 +1,20 @@
+.NotFound h1,
+.NotFound p {
+  text-align: center;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+}
+
+.NotFound h1 {
+  font-size: 120px;
+}
+
+.NotFound p {
+  font-size: 40px;
+}
+
+.NotFound .BackHome {
+  margin-top: 20px;
+  text-align: center;
+}

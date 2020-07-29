@@ -1,4 +1,4 @@
-button {
+.Button {
   width: 100%;
   border: none;
   background-color: #00ac40;
@@ -8,8 +8,8 @@ button {
   color: white;
   padding: 15px;
   cursor: pointer;
-  transition: ease-in-out 0.25s;
+  transition: ease-in-out 0.5s;
 }
-button:hover {
+.Button:hover {
   opacity: 0.9;
 }

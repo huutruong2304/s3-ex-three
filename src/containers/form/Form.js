@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import Input from "../../components/UI/input/Input";
 import Button from "../../components/UI/button/Button";
 
-import "./LoginForm.css";
+import "./Form.css";
 import Link from "../../components/UI/link/Link";
 
-class LoginForm extends Component {
+class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -179,7 +179,7 @@ class LoginForm extends Component {
       </form>
     );
     return (
-      <div className="LoginForm">
+      <div className="Form">
         {form}
         <p className="Text">
           Not registered? <Link link="#" name="Create an account"></Link>
@@ -189,4 +189,4 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+export default Form;
