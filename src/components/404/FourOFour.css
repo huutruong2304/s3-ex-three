@@ -1,20 +1,20 @@
-.NotFound h1,
-.NotFound p {
+.FourOFour h1,
+.FourOFour p {
   text-align: center;
   text-transform: uppercase;
   color: white;
   font-weight: bold;
 }
 
-.NotFound h1 {
+.FourOFour h1 {
   font-size: 120px;
 }
 
-.NotFound p {
+.FourOFour p {
   font-size: 40px;
 }
 
-.NotFound .BackHome {
+.FourOFour .BackHome {
   margin-top: 20px;
   text-align: center;
 }

@@ -1,12 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./App.css";
-import LoginForm from "../login-form/LoginForm";
-import NotFound from "../../components/404/NotFound";
+import Signup from "../views/signup/Signup";
 function App() {
   return (
     <div className="App">
-      {/* <NotFound></NotFound> */}
-      <LoginForm></LoginForm>
+      <Signup></Signup>
     </div>
   );
 }

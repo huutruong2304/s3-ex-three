@@ -1,8 +1,8 @@
 import React from "react";
-import "./NotFound.css";
+import "./FourOFour.css";
 import Link from "../UI/link/Link";
-const NotFound = () => (
-  <div className="NotFound">
+const FourOFour = () => (
+  <div className="FourOFour">
     <h1>Oops!</h1>
     <p>404 - Not found</p>
     <div className="BackHome">
@@ -11,4 +11,4 @@ const NotFound = () => (
   </div>
 );
 
-export default NotFound;
+export default FourOFour;

@@ -1,54 +1,35 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
+import "./Form.css";
+import { loginForm, signUpForm } from "./form-properties";
+
 import Input from "../../components/UI/input/Input";
 import Button from "../../components/UI/button/Button";
-
-import "./Form.css";
 import Link from "../../components/UI/link/Link";
 
-class Form extends Component {
+class Form extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      loginForm: {
-        username: {
-          elementType: "input",
-          elementConfig: {
-            type: "text",
-            placeholder: "Username",
-          },
-          value: "",
-          validation: {
-            required: true,
-            minLength: 4,
-            maxLength: 20,
-            // phoneNumber: true,
-            // email: true,
-            includeSpecialCharacter: true,
-          },
-          errors: [],
-
-          valid: false,
-          touched: false,
-        },
-        password: {
-          elementType: "input",
-          elementConfig: {
-            type: "password",
-            placeholder: "Password",
-          },
-          value: "",
-          validation: {
-            required: true,
-            minLength: 6,
-            maxLength: 30,
-          },
-          errors: [],
-          valid: false,
-          touched: false,
-        },
-      },
+      form: {},
+      submitMethod: "",
       validForm: false,
     };
+  }
+
+  componentDidMount() {
+    if (this.props.typeForm === "login") {
+      this.setState({
+        ...this.state,
+        submitMethod: "Log in",
+        form: loginForm,
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        submitMethod: "Signup",
+        form: signUpForm,
+      });
+    }
   }
 
   checkValidity = (value = "", rules) => {
@@ -62,7 +43,7 @@ class Form extends Component {
       }
     }
     if (rules.minLength && valid) {
-      if (value.length <= rules.minLength) {
+      if (value.length < rules.minLength) {
         valid = false;
 
         errors.push("Minimum length is " + rules.minLength);
@@ -70,7 +51,7 @@ class Form extends Component {
     }
 
     if (rules.maxLength && valid) {
-      if (value.length >= rules.maxLength) {
+      if (value.length > rules.maxLength) {
         valid = false;
         errors.push("Maximum length is " + rules.maxLength);
       }
@@ -103,15 +84,22 @@ class Form extends Component {
     return { valid, errors };
   };
 
+  checkPasswordConfirm = (psw, pswCfm) => {
+    if (psw !== pswCfm) {
+      return false;
+    }
+    return true;
+  };
+
   handleChange = (event, id) => {
     // console.log("value " + typeof event.target.value);
 
-    const updatedLoginForm = {
-      ...this.state.loginForm,
+    const updatedForm = {
+      ...this.state.form,
     };
 
     const updatedElement = {
-      ...updatedLoginForm[id],
+      ...updatedForm[id],
     };
 
     updatedElement.value = event.target.value;
@@ -120,20 +108,24 @@ class Form extends Component {
       updatedElement.value,
       updatedElement.validation
     );
-
+    // if(updatedElement.passwordConfirm && updatedElement.valid){
+    //   this.checkPasswordConfirm(updatedForm[password].value,updatedElement.value,);
+    // }
     updatedElement.valid = valid;
     updatedElement.errors = errors;
 
+    updatedForm[id] = updatedElement;
     let validForm = true;
-    for (const key in updatedLoginForm) {
-      if (!updatedLoginForm[key].valid) {
+    for (const key in updatedForm) {
+      if (!updatedForm[key].valid) {
         validForm = false;
         break;
       }
     }
-    updatedLoginForm[id] = updatedElement;
+    // console.log(updatedElement);
+    // console.log(validForm);
     this.setState({
-      loginForm: updatedLoginForm,
+      form: updatedForm,
       validForm,
     });
   };
@@ -151,16 +143,26 @@ class Form extends Component {
   //   this.setState({ loginForm: updatedLoginForm });
   // };
 
+  submitForm = (event) => {
+    event.preventDefault();
+    let formData = {};
+    for (const key in this.state.form) {
+      formData[key] = this.state.form[key].value;
+    }
+    this.props.getFormData(formData);
+  };
+
   render() {
     const formElementsArray = [];
-    for (const key in this.state.loginForm) {
+    for (const key in this.state.form) {
       formElementsArray.push({
         id: key,
-        config: this.state.loginForm[key],
+        config: this.state.form[key],
       });
     }
 
     let form = (
+      // <form onSubmit={(event) => this.submitForm(event)}>
       <form>
         {formElementsArray.map((formElement) => (
           <Input
@@ -175,13 +177,17 @@ class Form extends Component {
             // clicked={() => this.handleClick(formElement.id)}
           />
         ))}
-        <Button disabled={!this.state.validForm} name="login"></Button>
+        <Button
+          disabled={!this.state.validForm}
+          name={this.state.submitMethod}
+          clicked={(event) => this.submitForm(event)}
+        ></Button>
       </form>
     );
     return (
       <div className="Form">
         {form}
-        <p className="Text">
+        <p className="Notice-text">
           Not registered? <Link link="#" name="Create an account"></Link>
         </p>
       </div>
