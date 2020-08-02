@@ -1,11 +1,9 @@
-const url_login =
-  "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
-const url_singup =
-  "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
 const API_KEY = "AIzaSyBgS6yw5IEtk5eq6rmnkolgQbTYxbpvJv0";
 
-const loginFirebase = async () => {
+const loginFirebase = async (authData) => {
   try {
+    const url_login =
+      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
     const response = await axios.post(url_login + API_KEY, authData);
     console.log(response);
     dispatch(authSuccess(response.data));
@@ -14,9 +12,11 @@ const loginFirebase = async () => {
   }
 };
 
-const signUpFirebase = async () => {
+const signUpFirebase = async (authData) => {
   try {
-    const response = await axios.post(url_login + API_KEY, authData);
+    const url_signup =
+      "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
+    const response = await axios.post(url_signup + API_KEY, authData);
     console.log(response);
     dispatch(authSuccess(response.data));
   } catch (error) {
@@ -24,4 +24,4 @@ const signUpFirebase = async () => {
   }
 };
 
-export { signUp };
+export { loginFirebase, signUpFirebase };
