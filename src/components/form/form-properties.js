@@ -1,16 +1,36 @@
 const loginForm = {
-  username: {
+  // username: {
+  //   elementType: "input",
+  //   elementConfig: {
+  //     type: "text",
+  //     placeholder: "Username",
+  //   },
+  //   value: "",
+  //   validation: {
+  //     required: false,
+  //     minLength: 4,
+  //     maxLength: 20,
+  //     includeSpecialCharacter: true,
+  //   },
+  //   errors: [],
+
+  //   valid: false,
+  //   touched: false,
+  // },
+  email: {
     elementType: "input",
     elementConfig: {
       type: "text",
-      placeholder: "Username",
+      placeholder: "Email",
     },
     value: "",
     validation: {
-      required: false,
-      minLength: 4,
-      maxLength: 20,
-      includeSpecialCharacter: true,
+      required: true,
+      //   minLength: 4,
+      //   maxLength: 20,
+      // phoneNumber: true,
+      email: true,
+      //   includeSpecialCharacter: true,
     },
     errors: [],
 

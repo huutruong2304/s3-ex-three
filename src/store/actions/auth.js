@@ -1,16 +1,25 @@
-import { AUTH_FAIL, AUTH_SUCCESS, AUTH_START } from "./action-types";
-import axios from "axios";
-
+import {
+  AUTH_FAIL,
+  AUTH_SUCCESS,
+  AUTH_START,
+  AUTH_LOGOUT,
+} from "./action-types";
+import { loginFirebase, signUpFirebase } from "../../utils/firebase/firebase";
+import {
+  setTokenOnLocal,
+  removeTokenOnLocal,
+} from "../../utils/local-storage/local-storage";
 const authStart = () => {
   return {
     type: AUTH_START,
   };
 };
 
-const authSuccess = (authData) => {
+const authSuccess = (idToken, userId) => {
   return {
     type: AUTH_SUCCESS,
-    authData,
+    idToken: idToken,
+    userId: userId,
   };
 };
 const authFail = (error) => {
@@ -19,28 +28,49 @@ const authFail = (error) => {
     error,
   };
 };
+
+const authLogout = () => {
+  return {
+    type: AUTH_LOGOUT,
+  };
+};
+
+const checkAuthTimeout = (expirationTime) => {
+  return (dispatch) => {
+    setTimeout(() => {
+      dispatch(authLogout());
+      removeTokenOnLocal();
+    }, expirationTime * 1000);
+  };
+};
+
 const auth = (email, password, isLogin = false) => {
   return async (dispatch) => {
     dispatch(authStart());
-    // const authData = {
-    //   email: email,
-    //   password: password,
-    //   returnSecureToken: true,
-    // };
-    // if (isLogin) {
-    // }
-    // try {
-    //   const response = await axios.post(
-    //     "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=" +
-    //       API_KEY,
-
-    //     authData
-    //   );
-    //   console.log(response);
-    //   dispatch(authSuccess(response.data));
-    // } catch (error) {
-    //   dispatch(authFail(error));
-    // }
+    const authData = {
+      email: email,
+      password: password,
+      returnSecureToken: true,
+    };
+    if (isLogin) {
+      try {
+        let { idToken, localId, expiresIn } = await loginFirebase(authData);
+        dispatch(authSuccess(idToken, localId));
+        setTokenOnLocal(idToken, localId);
+        dispatch(checkAuthTimeout(expiresIn));
+      } catch (error) {
+        dispatch(authFail(error));
+      }
+    } else {
+      try {
+        let { idToken, localId, expiresIn } = await signUpFirebase(authData);
+        dispatch(authSuccess(idToken, localId));
+        setTokenOnLocal(idToken, localId);
+        dispatch(checkAuthTimeout(expiresIn));
+      } catch (error) {
+        dispatch(authFail(error));
+      }
+    }
   };
 };
 

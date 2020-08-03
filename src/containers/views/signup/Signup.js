@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Form from "../../form/Form";
+import Form from "../../../components/form/Form";
 import * as actions from "../../../store/actions/index";
 import { connect } from "react-redux";
 
-const Signup = ({ signup }) => {
+const Signup = ({ onAuth }) => {
   // const [userData, setUserData] = useState({});
   const getFormData = (formData) => {
     console.log(formData);
-    signup(formData.email, formData.password);
+    onAuth(formData.email, formData.password);
   };
   return (
     <div className="Wrapper-green-background">
@@ -21,7 +21,7 @@ const Signup = ({ signup }) => {
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    signup: (email, password) => {
+    onAuth: (email, password) => {
       dispatch(actions.auth(email, password));
     },
   };

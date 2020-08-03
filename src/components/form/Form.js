@@ -2,9 +2,9 @@ import React, { PureComponent } from "react";
 import "./Form.css";
 import { loginForm, signUpForm } from "./form-properties";
 
-import Input from "../../components/UI/input/Input";
-import Button from "../../components/UI/button/Button";
-import Link from "../../components/UI/link/Link";
+import Input from "../UI/input/Input";
+import Button from "../UI/button/Button";
+import Link from "../UI/link/Link";
 
 class Form extends PureComponent {
   constructor(props) {
