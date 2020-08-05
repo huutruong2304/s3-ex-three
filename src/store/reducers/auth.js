@@ -16,10 +16,10 @@ const authStart = (state, action) => {
 
 const authSuccess = (state, action) => {
   return updatedObject(state, {
-    token: action.idToken,
+    token: action.token,
     userId: action.userId,
     error: null,
-    loading: false,
+    loading: true,
   });
 };
 const authFail = (state, action) => {
@@ -38,6 +38,14 @@ const authLogout = (state, action) => {
   });
 };
 
+const authUpdate = (state, action) => {
+  return updatedObject(state, {
+    username: action.username,
+    avatar: action.avatar,
+    loading: false,
+  });
+};
+
 export const authReducer = (state = authInitialState, action) => {
   switch (action.type) {
     case actionTypes.AUTH_START:
@@ -48,6 +56,8 @@ export const authReducer = (state = authInitialState, action) => {
       return authFail(state, action);
     case actionTypes.AUTH_LOGOUT:
       return authLogout(state, action);
+    case actionTypes.AUTH_UPDATE:
+      return authUpdate(state, action);
     default:
       return state;
   }

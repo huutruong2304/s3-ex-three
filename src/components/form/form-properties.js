@@ -56,40 +56,6 @@ const loginForm = {
 };
 
 const signUpForm = {
-  // firstName: {
-  //   elementType: "input",
-  //   elementConfig: {
-  //     type: "text",
-  //     placeholder: "First name",
-  //   },
-  //   value: "",
-  //   validation: {
-  //     required: true,
-  //     minLength: 4,
-  //     maxLength: 20,
-  //   },
-  //   errors: [],
-
-  //   valid: false,
-  //   touched: false,
-  // },
-  // lastName: {
-  //   elementType: "input",
-  //   elementConfig: {
-  //     type: "text",
-  //     placeholder: "Last name",
-  //   },
-  //   value: "",
-  //   validation: {
-  //     required: true,
-  //     minLength: 4,
-  //     maxLength: 20,
-  //   },
-  //   errors: [],
-
-  //   valid: false,
-  //   touched: false,
-  // },
   email: {
     elementType: "input",
     elementConfig: {
@@ -107,6 +73,40 @@ const signUpForm = {
     },
     errors: [],
 
+    valid: false,
+    touched: false,
+  },
+  username: {
+    elementType: "input",
+    elementConfig: {
+      type: "text",
+      placeholder: "Username",
+    },
+    value: "",
+    validation: {
+      required: true,
+      minLength: 4,
+      maxLength: 20,
+    },
+    errors: [],
+
+    valid: false,
+    touched: false,
+  },
+
+  avatar: {
+    elementType: "input",
+    elementConfig: {
+      type: "text",
+      placeholder: "Your avatar image link...",
+    },
+    value: "",
+    validation: {
+      // required: true,
+      // minLength: 4,
+      // maxLength: 20,
+    },
+    errors: [],
     valid: false,
     touched: false,
   },

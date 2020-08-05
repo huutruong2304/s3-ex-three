@@ -3,14 +3,27 @@ import Form from "../../../components/form/Form";
 import * as actions from "../../../store/actions/index";
 import { connect } from "react-redux";
 
-const Signup = ({ onAuth }) => {
-  // const [userData, setUserData] = useState({});
+import { Redirect } from "react-router-dom";
+
+const Signup = ({ isAuthenticated, onAuth }) => {
+  let authRedirect = null;
   const getFormData = (formData) => {
     console.log(formData);
-    onAuth(formData.email, formData.password);
+    onAuth(
+      formData.email,
+      formData.password,
+      formData.username,
+      formData.avatar
+    );
   };
+
+  if (isAuthenticated) {
+    authRedirect = <Redirect to="/" />;
+  }
+
   return (
     <div className="Wrapper-green-background">
+      {authRedirect}
       <Form
         typeForm="signup"
         getFormData={(formData) => getFormData(formData)}
@@ -18,13 +31,18 @@ const Signup = ({ onAuth }) => {
     </div>
   );
 };
+const mapStateToProps = (state, ownProps) => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  };
+};
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onAuth: (email, password) => {
-      dispatch(actions.auth(email, password));
+    onAuth: (email, password, username, avatar) => {
+      dispatch(actions.auth(email, password, false, username, avatar));
     },
   };
 };
 
-export default connect(null, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);
