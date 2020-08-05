@@ -3,6 +3,9 @@ import { updatedObject } from "../utility";
 const authInitialState = {
   token: null,
   userId: null,
+  username: "Mr.X",
+  avatar:
+    "https://static01.nyt.com/newsgraphics/2019/08/01/candidate-pages/b4522271a4f73426d5de7437ff4d0aa6b616b469/trump.jpg",
   error: null,
   loading: false,
 };
@@ -30,6 +33,8 @@ const authLogout = (state, action) => {
   return updatedObject(state, {
     token: null,
     userId: null,
+    loading: false,
+    error: null,
   });
 };
 

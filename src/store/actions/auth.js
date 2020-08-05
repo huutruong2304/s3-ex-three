@@ -4,10 +4,15 @@ import {
   AUTH_START,
   AUTH_LOGOUT,
 } from "./action-types";
-import { loginFirebase, signUpFirebase } from "../../utils/firebase/firebase";
+import {
+  loginFirebase,
+  signUpFirebase,
+  getUserFirebase,
+} from "../../utils/firebase/firebase";
 import {
   setTokenOnLocal,
   removeTokenOnLocal,
+  getTokenOnLocal,
 } from "../../utils/local-storage/local-storage";
 const authStart = () => {
   return {
@@ -30,6 +35,7 @@ const authFail = (error) => {
 };
 
 const authLogout = () => {
+  removeTokenOnLocal();
   return {
     type: AUTH_LOGOUT,
   };
@@ -38,8 +44,8 @@ const authLogout = () => {
 const checkAuthTimeout = (expirationTime) => {
   return (dispatch) => {
     setTimeout(() => {
+      console.log("loggggggggggggout");
       dispatch(authLogout());
-      removeTokenOnLocal();
     }, expirationTime * 1000);
   };
 };
@@ -56,7 +62,7 @@ const auth = (email, password, isLogin = false) => {
       try {
         let { idToken, localId, expiresIn } = await loginFirebase(authData);
         dispatch(authSuccess(idToken, localId));
-        setTokenOnLocal(idToken, localId);
+        setTokenOnLocal(idToken, expiresIn);
         dispatch(checkAuthTimeout(expiresIn));
       } catch (error) {
         dispatch(authFail(error));
@@ -65,7 +71,7 @@ const auth = (email, password, isLogin = false) => {
       try {
         let { idToken, localId, expiresIn } = await signUpFirebase(authData);
         dispatch(authSuccess(idToken, localId));
-        setTokenOnLocal(idToken, localId);
+        setTokenOnLocal(idToken, expiresIn);
         dispatch(checkAuthTimeout(expiresIn));
       } catch (error) {
         dispatch(authFail(error));
@@ -74,4 +80,25 @@ const auth = (email, password, isLogin = false) => {
   };
 };
 
-export { authFail, authSuccess, authStart, auth };
+const autoLogin = () => {
+  return async (dispatch) => {
+    const { token, expirationDate } = JSON.parse(getTokenOnLocal()) || {};
+    if (token) {
+      if (new Date(expirationDate) < new Date()) {
+        dispatch(authLogout());
+      } else {
+        dispatch(authStart());
+
+        console.log("auto login");
+        const { users } = await getUserFirebase(token);
+        dispatch(authSuccess(token, users[0].localId));
+        const expirationTime = Math.round(
+          (new Date(expirationDate).getTime() - new Date().getTime()) / 1000
+        );
+        dispatch(checkAuthTimeout(expirationTime));
+      }
+    }
+  };
+};
+
+export { authFail, authSuccess, authStart, auth, autoLogin, authLogout };

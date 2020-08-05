@@ -4,7 +4,7 @@ import { loginForm, signUpForm } from "./form-properties";
 
 import Input from "../UI/input/Input";
 import Button from "../UI/button/Button";
-import Link from "../UI/link/Link";
+import S3Link from "../UI/s3-link/S3Link";
 
 class Form extends PureComponent {
   constructor(props) {
@@ -58,7 +58,7 @@ class Form extends PureComponent {
     }
 
     if (rules.includeSpecialCharacter && valid) {
-      const rex = /[^a-zA-Z0-9\-\/]/;
+      const rex = /[^a-zA-Z0-9]/;
       if (rex.test(value)) {
         valid = false;
         errors.push("Not include special character: @,#,$,%,...");
@@ -184,12 +184,18 @@ class Form extends PureComponent {
         ></Button>
       </form>
     );
+
+    let notRegis =
+      this.props.typeForm === "login" ? (
+        <p className="Notice-text">
+          Not registered?{" "}
+          <S3Link link="/signup" name="Create an account"></S3Link>
+        </p>
+      ) : null;
     return (
       <div className="Form">
         {form}
-        <p className="Notice-text">
-          Not registered? <Link link="#" name="Create an account"></Link>
-        </p>
+        {notRegis}
       </div>
     );
   }

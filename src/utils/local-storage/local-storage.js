@@ -1,18 +1,19 @@
-const key_value_user = "user";
+const key_value_token = "token";
 export const removeTokenOnLocal = () => {
-  localStorage.removeItem(key_value_user);
+  localStorage.removeItem(key_value_token);
 };
 
-export const setTokenOnLocal = (token, userId) => {
+export const setTokenOnLocal = (token, expiresIn) => {
+  let expirationDate = new Date(new Date().getTime() + expiresIn * 1000);
   localStorage.setItem(
-    key_value_user,
+    key_value_token,
     JSON.stringify({
       token: token,
-      userId: userId,
+      expirationDate: expirationDate,
     })
   );
 };
 
 export const getTokenOnLocal = () => {
-  return JSON.parse(localStorage.getItem(key_value_user));
+  return localStorage.getItem(key_value_token);
 };

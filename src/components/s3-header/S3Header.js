@@ -2,8 +2,8 @@ import React from "react";
 import "./S3Header.css";
 
 import "antd/dist/antd.css";
-import { Layout, Space, Button, Avatar } from "antd";
-import { LogoutOutlined } from "@ant-design/icons";
+import { Layout, Space, Avatar } from "antd";
+import LogoutBtn from "../logout-btn/LogoutBtn";
 
 const { Header } = Layout;
 
@@ -13,9 +13,7 @@ const S3Header = ({ username, avatar }) => {
       <Space align="baseline">
         <Avatar src={avatar} />
         <p style={{ color: "white" }}>{username}</p>
-        <Button type="primary" danger>
-          <LogoutOutlined />
-        </Button>
+        <LogoutBtn></LogoutBtn>
       </Space>
     </Header>
   );

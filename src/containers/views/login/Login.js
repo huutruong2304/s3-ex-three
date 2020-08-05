@@ -1,17 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import Form from "../../../components/form/Form";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
 
-const Login = ({ onAuth }) => {
-  const [userData, setUserData] = useState({});
+import { Redirect } from "react-router-dom";
+
+const Login = ({ onAuth, isAuthenticated }) => {
+  let authRedirect = null;
   const getFormData = (formData) => {
-    console.log(formData);
-    const isLogin = true;
-    onAuth(formData.email, formData.password, isLogin);
+    // console.log(formData);
+    onAuth(formData.email, formData.password);
   };
+
+  if (isAuthenticated) {
+    authRedirect = <Redirect to="/" />;
+  }
+
   return (
     <div className="Wrapper-green-background">
+      {authRedirect}
       <Form
         typeForm="login"
         getFormData={(formData) => getFormData(formData)}
@@ -20,11 +27,17 @@ const Login = ({ onAuth }) => {
   );
 };
 
+const mapStateToProps = (state, ownProps) => {
+  return {
+    isAuthenticated: state.auth.token !== null,
+  };
+};
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onAuth: (email, password, isLogin) => {
-      dispatch(actions.auth(email, password, isLogin));
+    onAuth: (email, password) => {
+      dispatch(actions.auth(email, password, true));
     },
   };
 };
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

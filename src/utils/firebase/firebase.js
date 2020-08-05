@@ -17,4 +17,11 @@ const signUpFirebase = async (authData) => {
   return response.data;
 };
 
-export { loginFirebase, signUpFirebase };
+const getUserFirebase = async (token) => {
+  const url_getUser =
+    "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=";
+  const response = await axios.post(url_getUser + API_KEY, { idToken: token });
+  return response.data;
+};
+
+export { loginFirebase, signUpFirebase, getUserFirebase };
