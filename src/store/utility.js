@@ -4,3 +4,7 @@ export const updatedObject = (oldObject, updatedProperties) => {
     ...updatedProperties,
   };
 };
+
+export const exceptObjectById = (arr, id) => {
+  return arr.filter((obj) => obj.id !== id);
+};

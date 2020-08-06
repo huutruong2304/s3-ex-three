@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 
 import "./Admin.css";
@@ -7,15 +7,20 @@ import "antd/dist/antd.css";
 import { Layout } from "antd";
 import S3Sidebar from "../../../components/s3-sidebar/S3Sidebar";
 import S3Table from "../../../components/s3-table/S3Table";
+import { initUserData } from "../../../store/actions";
 
 // import { Switch, Route } from "react-router-dom";
-import { users } from "./users";
+// import { users } from "./users";
 
 const { Content, Footer } = Layout;
 
 const keys = ["username", "email", "avatar", "action"];
 
-const Admin = ({ avatar, username, userId }) => {
+const Admin = ({ avatar, username, userId, users, onInitTableUser }) => {
+  useEffect(() => {
+    onInitTableUser();
+    // message.success("Welcome to S3Corp!");
+  }, [onInitTableUser]);
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <S3Sidebar></S3Sidebar>
@@ -43,7 +48,15 @@ const mapStateToProps = (state, ownProps) => {
     avatar: state.auth.avatar,
     username: state.auth.username,
     userId: state.auth.userId,
+    users: state.user.users,
+  };
+};
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onInitTableUser: () => {
+      dispatch(initUserData());
+    },
   };
 };
 
-export default connect(mapStateToProps)(Admin);
+export default connect(mapStateToProps, mapDispatchToProps)(Admin);

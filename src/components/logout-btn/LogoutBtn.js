@@ -1,6 +1,6 @@
 import React from "react";
 import { LogoutOutlined } from "@ant-design/icons";
-import { Button } from "antd";
+import { Button, Popconfirm } from "antd";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
@@ -13,12 +13,23 @@ const LogoutBtn = ({ onLogout }) => {
     onLogout();
     logoutRedirect = <Redirect to="/logout" />;
   };
+  const confirmLogout = () => {
+    handleRedirect();
+  };
 
   if (logoutRedirect === null) {
     logoutRedirect = (
-      <Button type="primary" danger onClick={() => handleRedirect()}>
-        <LogoutOutlined />
-      </Button>
+      <Popconfirm
+        placement="bottomRight"
+        title="Are you sure log out?"
+        onConfirm={() => confirmLogout()}
+        okText="Yes"
+        cancelText="No"
+      >
+        <Button type="primary" danger>
+          <LogoutOutlined />
+        </Button>
+      </Popconfirm>
     );
   }
 

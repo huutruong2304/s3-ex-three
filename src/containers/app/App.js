@@ -6,7 +6,7 @@ import "./App.css";
 
 import Login from "../views/login/Login";
 import Home from "../views/home/Home";
-
+import NotFound from "../views/not-found/NotFound";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Signup from "../views/signup/Signup";
 
@@ -28,6 +28,9 @@ function App({ onAutoAuth }) {
         </Route>
         <Route path="/logout">
           <Redirect to="/login" />
+        </Route>
+        <Route path="*">
+          <NotFound></NotFound>
         </Route>
       </Switch>
     </div>

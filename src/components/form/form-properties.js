@@ -185,4 +185,60 @@ const signUpForm = {
   // },
 };
 
-export { loginForm, signUpForm };
+const submitForm = ({ email, username, avatar }) => ({
+  email: {
+    elementType: "input",
+    elementConfig: {
+      type: "text",
+      placeholder: "Email",
+    },
+    value: email,
+    validation: {
+      required: true,
+      //   minLength: 4,
+      //   maxLength: 20,
+      // phoneNumber: true,
+      email: true,
+      //   includeSpecialCharacter: true,
+    },
+    errors: [],
+
+    valid: false,
+    touched: false,
+  },
+  username: {
+    elementType: "input",
+    elementConfig: {
+      type: "text",
+      placeholder: "Username",
+    },
+    value: username,
+    validation: {
+      required: true,
+      minLength: 4,
+      maxLength: 20,
+    },
+    errors: [],
+
+    valid: false,
+    touched: false,
+  },
+  avatar: {
+    elementType: "input",
+    elementConfig: {
+      type: "text",
+      placeholder: "Your avatar image link...",
+    },
+    value: avatar,
+    validation: {
+      // required: true,
+      // minLength: 4,
+      // maxLength: 20,
+    },
+    errors: [],
+    valid: false,
+    touched: false,
+  },
+});
+
+export { loginForm, signUpForm, submitForm };

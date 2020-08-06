@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 import "./Form.css";
-import { loginForm, signUpForm } from "./form-properties";
+import { loginForm, signUpForm, submitForm } from "./form-properties";
 
 import Input from "../UI/input/Input";
 import Button from "../UI/button/Button";
@@ -17,18 +17,29 @@ class Form extends PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.typeForm === "login") {
-      this.setState({
-        ...this.state,
-        submitMethod: "Log in",
-        form: loginForm,
-      });
-    } else {
-      this.setState({
-        ...this.state,
-        submitMethod: "Signup",
-        form: signUpForm,
-      });
+    switch (this.props.typeForm) {
+      case "login":
+      case "signin":
+        this.setState({
+          ...this.state,
+          submitMethod: "Log in",
+          form: loginForm,
+        });
+        break;
+      case "signup":
+        this.setState({
+          ...this.state,
+          submitMethod: "Signup",
+          form: signUpForm,
+        });
+        break;
+      default:
+        this.setState({
+          ...this.sate,
+          submitMethod: "Submit",
+          form: submitForm(this.props.placeHolder || {}),
+        });
+        break;
     }
   }
 
@@ -129,19 +140,6 @@ class Form extends PureComponent {
       validForm,
     });
   };
-  // handleClick = (id) => {
-  //   const updatedLoginForm = {
-  //     ...this.state.loginForm,
-  //   };
-
-  //   const updatedElement = {
-  //     ...updatedLoginForm[id],
-  //   };
-
-  //   updatedElement.touched = true;
-  //   updatedLoginForm[id] = updatedElement;
-  //   this.setState({ loginForm: updatedLoginForm });
-  // };
 
   submitForm = (event) => {
     event.preventDefault();
@@ -193,7 +191,15 @@ class Form extends PureComponent {
         </p>
       ) : null;
     return (
-      <div className="Form">
+      <div
+        style={{
+          display:
+            this.props.visable === undefined || this.props.visable
+              ? ""
+              : "none",
+        }}
+        className={this.props.size === "full" ? "Form Full-width" : "Form"}
+      >
         {form}
         {notRegis}
       </div>
