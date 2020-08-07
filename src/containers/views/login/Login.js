@@ -8,7 +8,6 @@ import { Redirect } from "react-router-dom";
 const Login = ({ onAuth, isAuthenticated }) => {
   let authRedirect = null;
   const getFormData = (formData) => {
-    // console.log(formData);
     onAuth(formData.email, formData.password);
   };
 

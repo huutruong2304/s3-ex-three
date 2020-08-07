@@ -7,18 +7,18 @@ import { Redirect } from "react-router-dom";
 import * as actions from "../../store/actions/index";
 
 const LogoutBtn = ({ onLogout }) => {
-  let logoutRedirect = null;
+  let logout = null;
 
   const handleRedirect = () => {
     onLogout();
-    logoutRedirect = <Redirect to="/logout" />;
+    logout = <Redirect to="/logout"></Redirect>;
   };
   const confirmLogout = () => {
     handleRedirect();
   };
 
-  if (logoutRedirect === null) {
-    logoutRedirect = (
+  if (logout === null) {
+    logout = (
       <Popconfirm
         placement="bottomRight"
         title="Are you sure log out?"
@@ -33,7 +33,7 @@ const LogoutBtn = ({ onLogout }) => {
     );
   }
 
-  return logoutRedirect;
+  return logout;
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {

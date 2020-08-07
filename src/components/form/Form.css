@@ -15,3 +15,9 @@
   color: #cccccc;
   text-align: center;
 }
+
+@media screen and (max-width: 600px) {
+  .Form {
+    width: 95%;
+  }
+}

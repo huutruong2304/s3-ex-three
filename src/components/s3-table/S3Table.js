@@ -39,6 +39,7 @@ const S3Table = ({
   updateUser,
 }) => {
   let searchInput = null;
+  let updateFormModal = null;
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const [formAddStatus, setFormAddStatus] = useState(false);
@@ -133,7 +134,7 @@ const S3Table = ({
   };
 
   const submitCreateUser = (formData) => {
-    console.log(formData);
+    // console.log(formData);
     toggleAddForm();
     addUser(formData.username, formData.email, formData.avatar);
     message.success("Created successully");
@@ -241,6 +242,25 @@ const S3Table = ({
     };
   });
 
+  // form modal will display when "formUpdateStatus" is true
+  if (formUpdateStatus) {
+    updateFormModal = (
+      <Modal
+        title={"Update user: " + currentUser.id}
+        visible={formUpdateStatus}
+        onCancel={() => toggleFormUpdate()}
+        footer={null}
+        bodyStyle={{ padding: 0 }}
+      >
+        <Form
+          getFormData={(formData) => submitUpdateUser(currentUser.id, formData)}
+          size="full"
+          placeHolder={currentUser}
+        ></Form>
+      </Modal>
+    );
+  }
+
   return (
     <div>
       <Title level={2} style={{ textAlign: "center", margin: "10px 0" }}>
@@ -258,19 +278,7 @@ const S3Table = ({
         getFormData={(formData) => submitCreateUser(formData)}
         size="full"
       ></Form>
-      <Modal
-        title={"Update user: " + currentUser.id}
-        visible={formUpdateStatus}
-        onCancel={() => toggleFormUpdate()}
-        footer={null}
-        bodyStyle={{ padding: 0 }}
-      >
-        <Form
-          getFormData={(formData) => submitUpdateUser(currentUser.id, formData)}
-          size="full"
-          placeHolder={currentUser}
-        ></Form>
-      </Modal>
+      {updateFormModal}
       <Table
         dataSource={dataSource}
         columns={columns}

@@ -33,7 +33,7 @@ const authSuccess = (token, userId) => {
 const authFail = (error) => {
   return {
     type: AUTH_FAIL,
-    error,
+    error: error.response.data.error.message,
   };
 };
 
@@ -77,6 +77,7 @@ const auth = (email, password, isLogin = false, username, avatar) => {
         dispatch(authUpdate(users[0].displayName, users[0].photoUrl));
         setTokenOnLocal(idToken, expiresIn);
         dispatch(checkAuthTimeout(expiresIn));
+        return true;
       } catch (error) {
         dispatch(authFail(error));
       }

@@ -34,10 +34,14 @@ class Form extends PureComponent {
         });
         break;
       default:
+        let { form, validForm } = this.initValid(
+          submitForm(this.props.placeHolder || {})
+        );
         this.setState({
           ...this.sate,
           submitMethod: "Submit",
-          form: submitForm(this.props.placeHolder || {}),
+          validForm,
+          form,
         });
         break;
     }
@@ -100,6 +104,21 @@ class Form extends PureComponent {
       return false;
     }
     return true;
+  };
+
+  initValid = (sampleForm = {}) => {
+    let form = sampleForm;
+    let validForm = true;
+    for (const key in sampleForm) {
+      sampleForm[key].valid = this.checkValidity(
+        sampleForm[key].value,
+        sampleForm[key].validation
+      );
+      if (!sampleForm[key].valid) {
+        validForm = false;
+      }
+    }
+    return { form, validForm };
   };
 
   handleChange = (event, id) => {
@@ -182,14 +201,24 @@ class Form extends PureComponent {
         ></Button>
       </form>
     );
+    let noticeText = null;
 
-    let notRegis =
-      this.props.typeForm === "login" ? (
+    if (this.props.typeForm === "login") {
+      noticeText = (
         <p className="Notice-text">
-          Not registered?{" "}
-          <S3Link link="/signup" name="Create an account"></S3Link>
+          Not registered? <S3Link link="/signup" name="Create an account" />
         </p>
-      ) : null;
+      );
+    } else {
+      if (this.props.typeForm === "signup") {
+        noticeText = (
+          <p className="Notice-text">
+            <S3Link link="/login" name="Back to Login" />
+          </p>
+        );
+      }
+    }
+
     return (
       <div
         style={{
@@ -201,7 +230,7 @@ class Form extends PureComponent {
         className={this.props.size === "full" ? "Form Full-width" : "Form"}
       >
         {form}
-        {notRegis}
+        {noticeText}
       </div>
     );
   }

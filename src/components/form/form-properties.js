@@ -185,7 +185,7 @@ const signUpForm = {
   // },
 };
 
-const submitForm = ({ email, username, avatar }) => ({
+const submitForm = ({ email = "", username = "", avatar = "" }) => ({
   email: {
     elementType: "input",
     elementConfig: {

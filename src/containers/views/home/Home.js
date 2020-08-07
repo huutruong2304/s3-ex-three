@@ -1,16 +1,17 @@
-import React from "react";
-
-import "./Home.css";
-
-import Loading from "../loading/Loading";
-
+import React, { useEffect } from "react";
 import { Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-// import * as actions from "../../../store/actions/index";
+import * as actions from "../../../store/actions/index";
+
+import Loading from "../loading/Loading";
 import Admin from "../admin/Admin";
 
-const Home = ({ isLoading, isAuthenticated, onAutoAuth }) => {
+const Home = ({ isLoading, isAuthenticated, onAccessed }) => {
   let mainContainer = <Redirect to="/login"></Redirect>;
+
+  useEffect(() => {
+    onAccessed();
+  }, [onAccessed]);
   if (isLoading) {
     console.log("loading");
     mainContainer = <Loading></Loading>;
@@ -31,4 +32,12 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onAccessed: () => {
+      dispatch(actions.accessed());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

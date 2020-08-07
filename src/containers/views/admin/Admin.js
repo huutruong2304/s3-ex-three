@@ -9,7 +9,7 @@ import S3Sidebar from "../../../components/s3-sidebar/S3Sidebar";
 import S3Table from "../../../components/s3-table/S3Table";
 import { initUserData } from "../../../store/actions";
 
-// import { Switch, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 // import { users } from "./users";
 
 const { Content, Footer } = Layout;
@@ -27,16 +27,15 @@ const Admin = ({ avatar, username, userId, users, onInitTableUser }) => {
       <Layout className="site-layout">
         <S3Header avatar={avatar} username={username}></S3Header>
         <Content style={{ margin: "0 16px" }}>
-          <S3Table
-            title="Users Manager"
-            userId={userId}
-            data={users}
-            keys={keys}
-          ></S3Table>
-          {/* <Switch> */}
-          {/* <Route path="/user-panel">user panel</Route> */}
-          {/* <Route path="/profile-panel">profile panel</Route> */}
-          {/* </Switch> */}
+          <Route path="/">
+            <S3Table
+              title="Users Manager"
+              userId={userId}
+              data={users}
+              keys={keys}
+            ></S3Table>
+          </Route>
+          {/* <Route path="/admin/profile-panel">profile panel</Route> */}
         </Content>
         <Footer style={{ textAlign: "center" }}> Nguyễn Hữu Trường</Footer>
       </Layout>

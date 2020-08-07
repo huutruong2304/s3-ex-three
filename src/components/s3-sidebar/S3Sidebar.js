@@ -18,10 +18,10 @@ const S3Sidebar = () => {
       <div className="logo" />
       <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
         <Menu.Item key="1" icon={<UserOutlined />}>
-          <Link to="/user-panel">Users</Link>
+          <Link to="/">Users</Link>
         </Menu.Item>
         <Menu.Item key="2" icon={<AntDesignOutlined />}>
-          <Link to="/profile-panel"> Persional Profile</Link>
+          <Link to="/"> Persional Profile</Link>
         </Menu.Item>
       </Menu>
     </Sider>
