@@ -1,21 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Button.css";
 
 const Button = ({ name, clicked, disabled = false }) => {
-  // const [terminate, setTerminate] = useState(false);
+  const [terminate, setTerminate] = useState(false);
+
+  const terminateButton = (time) => {
+    setTimeout(() => {
+      setTerminate(false);
+    }, time);
+  };
+
+  useEffect(() => {
+    let timer = terminateButton(2000);
+    return () => clearTimeout(timer);
+  }, []);
 
   const handleClick = (event) => {
     clicked(event);
-    // setTerminate(false);
-    // setTimeout(() => {
-    //   setTerminate(false);
-    // }, 2000);
+    setTerminate(true);
   };
 
   return (
     <button
       className="Button"
-      disabled={disabled}
+      disabled={disabled || terminate}
       onClick={(event) => handleClick(event)}
     >
       {name}
